@@ -18,6 +18,8 @@ command /smp [<text>]:
 				send "&f[&4SMP&6++&f]: /smp help"
 				send "&f[&4SMP&6++&f]: /smp credits"
 				send "&f[&4SMP&6++&f]: /smp sleep"
+				send "&f[&4SMP&6++&f]: /smp sethome"
+				send "&f[&4SMP&6++&f]: /smp home"
 				send "&f[&4SMP&6++&f]: Admin Commands:"
 				send "&f[&4SMP&6++&f]: /smp reload"
 				send "&f[&4SMP&6++&f]: Page <1/1>"
@@ -43,6 +45,18 @@ command /smp [<text>]:
 				if player has permission "smp.reload":
 					execute player command "sk reload SMP++"
 					send "&f[&4SMP&6++&f]: &eConfig has been reloaded!"
+				else:
+					send "&f[&4SMP&6++&f]: &cError: &4You do not have permission."
+			if arg 1 is "sethome":
+				if player has permission "smp.home":
+					set {%player%.hometp.1} to player's location
+					send "&f[&4SMP&6++&f]: Home set! Do /smp home to go to your home!"
+				else:
+					send "&f[&4SMP&6++&f]: &cError: &4You do not have permission."
+			if arg 1 is "home":
+				if player has permission "smp.home":
+					teleport player to {%player%.hometp.1}
+					send "&f[&4SMP&6++&f]: Teleported!"
 				else:
 					send "&f[&4SMP&6++&f]: &cError: &4You do not have permission."
 		if yaml value "enabled" from "config" is false:
