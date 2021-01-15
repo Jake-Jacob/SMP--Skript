@@ -1,0 +1,54 @@
+# Made by Jake_Jacob SpigotMC: https://www.spigotmc.org/members/jake_jacob.1018658/
+
+on load:
+	load yaml "plugins/SMP++/config.yml" as "config"
+	if {firstload} is "true":
+		set yaml value "enabled" from "config" to true
+		set yaml value "sleep" from "config" to true
+		save yaml "config"
+		set {firstload} to "false"
+		
+
+command /smp [<text>]:
+	usage: &f[&4SMP&6++&f]: /smp help
+	trigger:
+		if yaml value "enabled" from "config" is true:
+			if arg 1 is "help":
+				send "&f[&4SMP&6++&f]: Commands:"
+				send "&f[&4SMP&6++&f]: /smp help"
+				send "&f[&4SMP&6++&f]: /smp credits"
+				send "&f[&4SMP&6++&f]: /smp sleep"
+				send "&f[&4SMP&6++&f]: Admin Commands:"
+				send "&f[&4SMP&6++&f]: /smp reload"
+				send "&f[&4SMP&6++&f]: Page <1/1>"
+			if arg 1 is "credits":
+				send "&f[&4SMP&6++&f]: Credits:"
+				send "&f[&4SMP&6++&f]: SMP++ made by &6Jake_Jacob"
+				send "&f[&4SMP&6++&f]: Dependencies:"
+				send "&f[&4SMP&6++&f]: Skript"
+				send "&f[&4SMP&6++&f]: Skellet"
+				send "&f[&4SMP&6++&f]: SkQuery"
+				send "&f[&4SMP&6++&f]: SkYaml"
+			if arg 1 is "sleep":
+				if yaml value "sleep" from "config" is true:
+					if time is day:
+						send "&f[&4SMP&6++&f]: You can not sleep during the day!"
+					else:
+						send "&f[&4SMP&6++&f]: You have gone to sleep!"
+						broadcast "&f[&4SMP&6++&f]: &6%player%&f has gone to sleep!"
+						set time to day
+				else:
+					send "&f[&4SMP&6++&f]: &6Sleep&f has been disabled by your server administrator!"
+			if arg 1 is "reload":
+				if player has permission "smp.reload":
+					execute player command "sk reload SMP++"
+					send "&f[&4SMP&6++&f]: &eConfig has been reloaded!"
+				else:
+					send "&f[&4SMP&6++&f]: &cError: &4You do not have permission."
+		if yaml value "enabled" from "config" is false:
+			send "&f[&4SMP&6++&f]: &4SMP&6++&f has been disabled by your server administrator!"
+
+command /smpreset:
+	permission: smp.reset
+	trigger:
+		set {firstload} to "true"
