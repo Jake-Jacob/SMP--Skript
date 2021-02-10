@@ -1,5 +1,14 @@
 # Made by Jake_Jacob SpigotMC: https://www.spigotmc.org/members/jake_jacob.1018658/
 
+on chat tab complete:
+    event-string is "/smp":
+        add "help" to completions
+        add "credits" to completions
+        add "sleep" to completions
+        add "sethome" to completions
+        add "home" to completions
+        add "reload" to completions
+
 on load:
 	load yaml "plugins/SMP++/config.yml" as "config"
 	if {firstload} is "true":
